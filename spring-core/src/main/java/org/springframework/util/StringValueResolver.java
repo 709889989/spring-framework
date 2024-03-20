@@ -19,6 +19,8 @@ package org.springframework.util;
 import org.springframework.lang.Nullable;
 
 /**
+ * 字符串占位符解析器策略模式接口
+ * 用于解析 "${xxx}" 等占位符配置信息
  * Simple strategy interface for resolving a String value.
  * Used by {@link org.springframework.beans.factory.config.ConfigurableBeanFactory}.
  *

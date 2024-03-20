@@ -81,6 +81,10 @@ public class SimpleMetadataReaderFactory implements MetadataReaderFactory {
 			return getMetadataReader(resource);
 		}
 		catch (FileNotFoundException ex) {
+			// 内部类处理：如CachingMetadataReaderFactory内部类LocalResourceCache
+			// 原生：org.springframework.core.type.classreading.CachingMetadataReaderFactory.LocalResourceCache
+			// 处理后：org.springframework.core.type.classreading.CachingMetadataReaderFactory$LocalResourceCache
+
 			// Maybe an inner class name using the dot name syntax? Need to use the dollar syntax here...
 			// ClassUtils.forName has an equivalent check for resolution into Class references later on.
 			int lastDotIndex = className.lastIndexOf('.');

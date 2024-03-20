@@ -106,6 +106,8 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.CollectionUtils;
 
 /**
+ * 注解 @Configuration 处理器 BeanFactoryPostProcessor
+ *
  * {@link BeanFactoryPostProcessor} used for bootstrapping processing of
  * {@link Configuration @Configuration} classes.
  *
@@ -354,6 +356,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	}
 
 	/**
+	 * 验证构建 @Configuration 配置的bean
 	 * Build and validate a configuration model based on the registry of
 	 * {@link Configuration} classes.
 	 */

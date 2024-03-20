@@ -48,6 +48,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ * 通用的 ApplicationContext 持有DefaultListableBeanFactory
+ *
  * Generic ApplicationContext implementation that holds a single internal
  * {@link org.springframework.beans.factory.support.DefaultListableBeanFactory}
  * instance and does not assume a specific bean definition format. Implements
@@ -111,6 +113,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 
 	private boolean customClassLoader = false;
 
+	// refresh标识，不支持多次refresh
 	private final AtomicBoolean refreshed = new AtomicBoolean();
 
 
@@ -120,6 +123,7 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	 * @see #refresh
 	 */
 	public GenericApplicationContext() {
+		// 设置默认BeanFactory
 		this.beanFactory = new DefaultListableBeanFactory();
 	}
 
@@ -289,10 +293,12 @@ public class GenericApplicationContext extends AbstractApplicationContext implem
 	 */
 	@Override
 	protected final void refreshBeanFactory() throws IllegalStateException {
+		// 多次调用异常失败
 		if (!this.refreshed.compareAndSet(false, true)) {
 			throw new IllegalStateException(
 					"GenericApplicationContext does not support multiple refresh attempts: just call 'refresh' once");
 		}
+		// 设置序列化id
 		this.beanFactory.setSerializationId(getId());
 	}
 

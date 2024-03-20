@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.function.Supplier;
 
 /**
+ * 默认 "no op" ApplicationStartup 实现
+ * <p>此变种实现为了最小化开销，并且不记录任何事件
+ *
  * Default "no op" {@code ApplicationStartup} implementation.
  *
  * <p>This variant is designed for minimal overhead and does not record events.

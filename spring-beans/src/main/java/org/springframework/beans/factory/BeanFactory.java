@@ -21,6 +21,7 @@ import org.springframework.core.ResolvableType;
 import org.springframework.lang.Nullable;
 
 /**
+ * Spring bean 管理容器根接口
  * The root interface for accessing a Spring bean container.
  *
  * <p>This is the basic client view of a bean container;

@@ -39,6 +39,9 @@ import org.springframework.util.ClassUtils;
 import org.springframework.util.MultiValueMap;
 
 /**
+ * 注解解析器 @Conditional
+ * 处理 @Conditional注解的内部类
+ *
  * Internal class used to evaluate {@link Conditional} annotations.
  *
  * @author Phillip Webb

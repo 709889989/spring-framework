@@ -34,6 +34,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ * 注解配置bean 的BeanDefinitionReader，用于bean 注入。
+ * 方便的 adapter适配, 参考：ClassPathBeanDefinitionScanner
+ *
  * Convenient adapter for programmatic registration of bean classes.
  *
  * <p>This is an alternative to {@link ClassPathBeanDefinitionScanner}, applying
@@ -68,6 +71,7 @@ public class AnnotatedBeanDefinitionReader {
 	 * @see #setEnvironment(Environment)
 	 */
 	public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry registry) {
+		// 创建注解bean配置信息解析器reader
 		this(registry, getOrCreateEnvironment(registry));
 	}
 
@@ -83,8 +87,11 @@ public class AnnotatedBeanDefinitionReader {
 	public AnnotatedBeanDefinitionReader(BeanDefinitionRegistry registry, Environment environment) {
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
 		Assert.notNull(environment, "Environment must not be null");
+		// bean 配置信息注册表
 		this.registry = registry;
+		// 1. 新建 @Condition 注解解析器
 		this.conditionEvaluator = new ConditionEvaluator(registry, environment, null);
+		// 2. 添加相关bean 处理器 processor
 		AnnotationConfigUtils.registerAnnotationConfigProcessors(this.registry);
 	}
 
@@ -287,14 +294,18 @@ public class AnnotatedBeanDefinitionReader {
 
 
 	/**
+	 * 获取或创建Environment
+	 *
 	 * Get the Environment from the given registry if possible, otherwise return a new
 	 * StandardEnvironment.
 	 */
 	private static Environment getOrCreateEnvironment(BeanDefinitionRegistry registry) {
 		Assert.notNull(registry, "BeanDefinitionRegistry must not be null");
+		// 1. BeanDefinitionRegistry 是 EnvironmentCapable, 返回其管理 Environment
 		if (registry instanceof EnvironmentCapable environmentCapable) {
 			return environmentCapable.getEnvironment();
 		}
+		// 2. 新建一个 StandardEnvironment
 		return new StandardEnvironment();
 	}
 

@@ -77,6 +77,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 
 	@Override
 	public String generateBeanName(BeanDefinition definition, BeanDefinitionRegistry registry) {
+		// 1. 使用注解配置beanName
 		if (definition instanceof AnnotatedBeanDefinition annotatedBeanDefinition) {
 			String beanName = determineBeanNameFromAnnotation(annotatedBeanDefinition);
 			if (StringUtils.hasText(beanName)) {
@@ -84,6 +85,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 				return beanName;
 			}
 		}
+		// 2. 注解未配置，生成默认beanName
 		// Fallback: generate a unique default bean name.
 		return buildDefaultBeanName(definition, registry);
 	}
@@ -105,10 +107,13 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 					Set<String> result = amd.getMetaAnnotationTypes(key);
 					return (result.isEmpty() ? Collections.emptySet() : result);
 				});
+				// 判断注解是否可以用来生成 beanName
 				if (isStereotypeWithNameValue(type, metaTypes, attributes)) {
+					// 使用注解配置作为beanName
 					Object value = attributes.get("value");
 					if (value instanceof String strVal && !strVal.isEmpty()) {
 						if (beanName != null && !strVal.equals(beanName)) {
+							// 多个注解配置不一样时报错
 							throw new IllegalStateException("Stereotype annotations suggest inconsistent " +
 									"component names: '" + beanName + "' versus '" + strVal + "'");
 						}
@@ -121,6 +126,8 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 	}
 
 	/**
+	 * 判断给定注解是否可以用来生成 beanName
+	 *
 	 * Check whether the given annotation is a stereotype that is allowed
 	 * to suggest a component name through its annotation {@code value()}.
 	 * @param annotationType the name of the annotation class to check
@@ -164,6 +171,7 @@ public class AnnotationBeanNameGenerator implements BeanNameGenerator {
 		String beanClassName = definition.getBeanClassName();
 		Assert.state(beanClassName != null, "No bean class name set");
 		String shortClassName = ClassUtils.getShortName(beanClassName);
+		// 类名首字母改为小写，作为默认beanName
 		return StringUtils.uncapitalizeAsProperty(shortClassName);
 	}
 

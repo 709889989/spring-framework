@@ -17,6 +17,7 @@
 package org.springframework.context;
 
 /**
+ * Lifecycle 扩展接口，用于需要在ApplicationContext中refresh 或者需要按照特定顺序shutdown的bean
  * An extension of the {@link Lifecycle} interface for those objects that require
  * to be started upon {@code ApplicationContext} refresh and/or shutdown in a
  * particular order.
@@ -80,6 +81,7 @@ public interface SmartLifecycle extends Lifecycle, Phased {
 
 
 	/**
+	 * true - 组件应该在ApplicationContext容器刷新时自动启动
 	 * Returns {@code true} if this {@code Lifecycle} component should get
 	 * started automatically by the container at the time that the containing
 	 * {@link ApplicationContext} gets refreshed.
@@ -97,6 +99,8 @@ public interface SmartLifecycle extends Lifecycle, Phased {
 	}
 
 	/**
+	 * 停止bean运行
+	 * callback 回调函数
 	 * Indicates that a Lifecycle component must stop if it is currently running.
 	 * <p>The provided callback is used by the {@link LifecycleProcessor} to support
 	 * an ordered, and potentially concurrent, shutdown of all components having a

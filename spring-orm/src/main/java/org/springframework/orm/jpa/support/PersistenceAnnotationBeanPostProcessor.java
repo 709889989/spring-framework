@@ -87,6 +87,8 @@ import org.springframework.util.ReflectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 添加 JPA支持 BeanPostProcessor
+ *
  * BeanPostProcessor that processes {@link jakarta.persistence.PersistenceUnit}
  * and {@link jakarta.persistence.PersistenceContext} annotations, for injection of
  * the corresponding JPA resources {@link jakarta.persistence.EntityManagerFactory}

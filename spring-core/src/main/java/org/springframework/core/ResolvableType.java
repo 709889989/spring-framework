@@ -43,6 +43,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * 封装 jdk Type类型，提供便捷方法获取class相关信息
  * Encapsulates a Java {@link java.lang.reflect.Type}, providing access to
  * {@link #getSuperType() supertypes}, {@link #getInterfaces() interfaces}, and
  * {@link #getGeneric(int...) generic parameters} along with the ability to ultimately
@@ -425,6 +426,8 @@ public class ResolvableType implements Serializable {
 	}
 
 	/**
+	 * 转换返回指定class的ResolvableType
+	 * 如不可转换为指定类型返回NONE
 	 * Return this type as a {@link ResolvableType} of the specified class. Searches
 	 * {@link #getSuperType() supertype} and {@link #getInterfaces() interface}
 	 * hierarchies to find a match, returning {@link #NONE} if this type does not
@@ -652,6 +655,9 @@ public class ResolvableType implements Serializable {
 	}
 
 	/**
+	 * 返回给定索引的泛型参数的ResolvableType对象
+	 * 索引参数从0开始，不传索引默认使用0
+	 * 嵌套范型可以传多个索引值
 	 * Return a {@link ResolvableType} representing the generic parameter for the
 	 * given indexes. Indexes are zero based; for example given the type
 	 * {@code Map<Integer, List<String>>}, {@code getGeneric(0)} will access the

@@ -21,6 +21,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.core.type.ClassMetadata;
 
 /**
+ * 类元数据读取器接口
+ *
  * Simple facade for accessing class metadata,
  * as read by an ASM {@link org.springframework.asm.ClassReader}.
  *
@@ -30,16 +32,22 @@ import org.springframework.core.type.ClassMetadata;
 public interface MetadataReader {
 
 	/**
+	 * 返回关联类资源
+	 *
 	 * Return the resource reference for the class file.
 	 */
 	Resource getResource();
 
 	/**
+	 * 获取类基础元数据
+	 *
 	 * Read basic class metadata for the underlying class.
 	 */
 	ClassMetadata getClassMetadata();
 
 	/**
+	 * 获取类注解元数据
+	 *
 	 * Read full annotation metadata for the underlying class,
 	 * including metadata for annotated methods.
 	 */

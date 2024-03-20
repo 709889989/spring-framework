@@ -32,6 +32,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 /**
+ * 扩展ASM class visitor 实现，用于生成 SimpleAnnotationMetadata
+ *
  * ASM class visitor that creates {@link SimpleAnnotationMetadata}.
  *
  * @author Phillip Webb

@@ -17,6 +17,8 @@
 package org.springframework.core;
 
 /**
+ * Ordered 接口，用于对象实现标识此对象是可排序的
+ *
  * {@code Ordered} is an interface that can be implemented by objects that
  * should be <em>orderable</em>, for example in a {@code Collection}.
  *
@@ -56,6 +58,7 @@ public interface Ordered {
 
 
 	/**
+	 * 返回对象的顺序值
 	 * Get the order value of this object.
 	 * <p>Higher values are interpreted as lower priority. As a consequence,
 	 * the object with the lowest value has the highest priority (somewhat

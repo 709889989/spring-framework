@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.meta.TypeQualifierDefault;
 
 /**
+ * Spring 注解声明包下file变量默认不可为null
  * A common Spring annotation to declare that fields are to be considered as
  * non-nullable by default for a given package.
  *

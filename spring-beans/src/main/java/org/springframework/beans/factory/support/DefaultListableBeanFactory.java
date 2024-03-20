@@ -85,6 +85,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 /**
+ * spring 默认 BeanFactory实现，可通过 PostProcessor扩展
+ *
  * Spring's default implementation of the {@link ConfigurableListableBeanFactory}
  * and {@link BeanDefinitionRegistry} interfaces: a full-fledged bean factory
  * based on bean definition metadata, extensible through post-processors.
@@ -202,6 +204,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
 
 	/**
+	 * 设置序列化id, 可用于反序列化
 	 * Specify an id for serialization purposes, allowing this BeanFactory to be
 	 * deserialized from this id back into the BeanFactory object, if needed.
 	 */
@@ -949,38 +952,54 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		return super.obtainInstanceFromSupplier(supplier, beanName, mbd);
 	}
 
+	/**
+	 * 实例化单例bean
+	 * @throws BeansException
+	 */
 	@Override
 	public void preInstantiateSingletons() throws BeansException {
 		if (logger.isTraceEnabled()) {
 			logger.trace("Pre-instantiating singletons in " + this);
 		}
 
+		// 此处使用beanName的copy, 防止bean 初始化时新增注册bean
 		// Iterate over a copy to allow for init methods which in turn register new bean definitions.
 		// While this may not be part of the regular factory bootstrap, it does otherwise work fine.
 		List<String> beanNames = new ArrayList<>(this.beanDefinitionNames);
 
+		// 1. 初始化所有的单例bean（除懒加载bean之外）
 		// Trigger initialization of all non-lazy singleton beans...
 		for (String beanName : beanNames) {
+			// 获取bean的配置定义信息
 			RootBeanDefinition bd = getMergedLocalBeanDefinition(beanName);
+			// bean 是单例, 且非抽象类非懒加载类，进行初始化
 			if (!bd.isAbstract() && bd.isSingleton() && !bd.isLazyInit()) {
+				// bean是FactoryBean 工厂bean
 				if (isFactoryBean(beanName)) {
+					// 获取工厂bean
 					Object bean = getBean(FACTORY_BEAN_PREFIX + beanName);
+					// 工厂bean 是饥饿加载模式，执行初始化
 					if (bean instanceof SmartFactoryBean<?> smartFactoryBean && smartFactoryBean.isEagerInit()) {
 						getBean(beanName);
 					}
 				}
 				else {
+					// 非工厂bean, 获取bean本身
 					getBean(beanName);
 				}
 			}
 		}
 
+		// 2. 进行bean 初始化，执行bean post-initialization 回调方法
 		// Trigger post-initialization callback for all applicable beans...
 		for (String beanName : beanNames) {
+			// 获取bean 单例实例 (允许早期引用)
 			Object singletonInstance = getSingleton(beanName);
+			// bean 是SmartInitializingSingleton对象，需要执行init初始化方法
 			if (singletonInstance instanceof SmartInitializingSingleton smartSingleton) {
 				StartupStep smartInitialize = this.getApplicationStartup().start("spring.beans.smart-initialize")
 						.tag("beanName", beanName);
+				// 执行 init初始化方法
 				smartSingleton.afterSingletonsInstantiated();
 				smartInitialize.end();
 			}

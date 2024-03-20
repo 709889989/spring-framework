@@ -28,6 +28,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.StringUtils;
 
 /**
+ * 简单注解元数据
+ *
  * {@link AnnotationMetadata} created from a
  * {@link SimpleAnnotationMetadataReadingVisitor}.
  *

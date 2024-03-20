@@ -77,13 +77,14 @@ class ApplicationContextAwareProcessor implements BeanPostProcessor {
 	@Override
 	@Nullable
 	public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+		// 非aware 接口实现类，返回
 		if (!(bean instanceof EnvironmentAware || bean instanceof EmbeddedValueResolverAware ||
 				bean instanceof ResourceLoaderAware || bean instanceof ApplicationEventPublisherAware ||
 				bean instanceof MessageSourceAware || bean instanceof ApplicationContextAware ||
 				bean instanceof ApplicationStartupAware)) {
 			return bean;
 		}
-
+		// 调用设置对应aware 对象
 		invokeAwareInterfaces(bean);
 		return bean;
 	}

@@ -559,6 +559,8 @@ public abstract class StringUtils {
 	}
 
 	/**
+	 * 将首位大写字母转换为小写
+	 *
 	 * Uncapitalize a {@code String} in JavaBeans property format,
 	 * changing the first letter to lower case as per
 	 * {@link Character#toLowerCase(char)}, unless the initial two
@@ -569,10 +571,12 @@ public abstract class StringUtils {
 	 * @see java.beans.Introspector#decapitalize(String)
 	 */
 	public static String uncapitalizeAsProperty(String str) {
+		// 空字符串、前2位字母全是大写，直接返回
 		if (!hasLength(str) || (str.length() > 1 && Character.isUpperCase(str.charAt(0)) &&
 				Character.isUpperCase(str.charAt(1)))) {
 			return str;
 		}
+		// 首字母转换为小写
 		return changeFirstCharacterCase(str, false);
 	}
 

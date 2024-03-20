@@ -26,6 +26,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.meta.TypeQualifierNickname;
 
 /**
+ * Spring 注解声明参数不能为空
  * A common Spring annotation to declare that annotated elements cannot be {@code null}.
  *
  * <p>Leverages JSR-305 meta-annotations to indicate nullability in Java to common

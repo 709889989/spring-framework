@@ -28,6 +28,8 @@ import org.springframework.util.Assert;
 import org.springframework.util.ConcurrentReferenceHashMap;
 
 /**
+ * GenericApplicationListener 对象适配器
+ * 转换适配ApplicationListener/SmartApplicationListener对象为GenericApplicationListener对象
  * {@link GenericApplicationListener} adapter that determines supported event types
  * through introspecting the generically declared type of the target listener.
  *
@@ -94,7 +96,11 @@ public class GenericApplicationListenerAdapter implements GenericApplicationList
 		return (this.delegate instanceof SmartApplicationListener sal ? sal.getListenerId() : "");
 	}
 
-
+	/**
+	 * 解析声明的eventType类型
+	 * @param listener
+	 * @return
+	 */
 	@Nullable
 	private static ResolvableType resolveDeclaredEventType(ApplicationListener<ApplicationEvent> listener) {
 		ResolvableType declaredEventType = resolveDeclaredEventType(listener.getClass());
@@ -107,13 +113,23 @@ public class GenericApplicationListenerAdapter implements GenericApplicationList
 		return declaredEventType;
 	}
 
+	/**
+	 * 解析声明的eventType类型
+	 * @param listenerType
+	 * @return
+	 */
 	@Nullable
 	static ResolvableType resolveDeclaredEventType(Class<?> listenerType) {
+		// 检查获取本地缓存
 		ResolvableType eventType = eventTypeCache.get(listenerType);
 		if (eventType == null) {
+			// 生成转换class的ResolvableType，并转换为ApplicationListener的ResolvableType
+			// 最后获取到ApplicationListener的范型参数类型ResolvableType
 			eventType = ResolvableType.forClass(listenerType).as(ApplicationListener.class).getGeneric();
+			// 添加本地缓存
 			eventTypeCache.put(listenerType, eventType);
 		}
+		// 未获取到eventType，默认返回ResolvableType.NONE
 		return (eventType != ResolvableType.NONE ? eventType : null);
 	}
 

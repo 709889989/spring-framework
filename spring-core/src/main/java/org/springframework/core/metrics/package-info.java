@@ -1,4 +1,6 @@
 /**
+ * 记录应用启动信息
+ *
  * Support package for recording metrics during application startup.
  */
 @NonNullApi

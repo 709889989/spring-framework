@@ -658,6 +658,8 @@ public abstract class AnnotationUtils {
 	}
 
 	/**
+	 * 判断clazz是否有指定注解
+	 *
 	 * Determine whether an annotation of the specified {@code annotationType}
 	 * is declared locally (i.e. <em>directly present</em>) on the supplied
 	 * {@code clazz}.

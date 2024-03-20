@@ -23,6 +23,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 标识被标注注解是可索引的
+ *
  * Indicate that the annotated element represents a stereotype for the index.
  *
  * <p>The {@code CandidateComponentsIndex} is an alternative to classpath

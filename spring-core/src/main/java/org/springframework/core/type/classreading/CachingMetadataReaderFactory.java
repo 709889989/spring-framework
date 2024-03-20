@@ -27,6 +27,8 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.lang.Nullable;
 
 /**
+ * 带缓冲的MetadataReaderFactory 实现
+ *
  * Caching implementation of the {@link MetadataReaderFactory} interface,
  * caching a {@link MetadataReader} instance per Spring {@link Resource} handle
  * (i.e. per ".class" file).
@@ -72,11 +74,14 @@ public class CachingMetadataReaderFactory extends SimpleMetadataReaderFactory {
 	 * @see DefaultResourceLoader#getResourceCache
 	 */
 	public CachingMetadataReaderFactory(@Nullable ResourceLoader resourceLoader) {
+		// 设置资源加载器 resourceLoader
 		super(resourceLoader);
 		if (resourceLoader instanceof DefaultResourceLoader defaultResourceLoader) {
+			// 设置MetadataReader的 resourceLoader 缓存
 			this.metadataReaderCache = defaultResourceLoader.getResourceCache(MetadataReader.class);
 		}
 		else {
+			// 设置本地缓存大小 256
 			setCacheLimit(DEFAULT_CACHE_LIMIT);
 		}
 	}
@@ -154,7 +159,7 @@ public class CachingMetadataReaderFactory extends SimpleMetadataReaderFactory {
 		}
 	}
 
-
+	// 本地缓存工具类，继承 LinkedHashMap
 	@SuppressWarnings("serial")
 	private static class LocalResourceCache extends LinkedHashMap<Resource, MetadataReader> {
 
@@ -173,6 +178,7 @@ public class CachingMetadataReaderFactory extends SimpleMetadataReaderFactory {
 			return this.cacheLimit;
 		}
 
+		// 删除缓存最旧的对象
 		@Override
 		protected boolean removeEldestEntry(Map.Entry<Resource, MetadataReader> eldest) {
 			return size() > this.cacheLimit;

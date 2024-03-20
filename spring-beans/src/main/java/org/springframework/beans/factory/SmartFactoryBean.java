@@ -61,6 +61,7 @@ public interface SmartFactoryBean<T> extends FactoryBean<T> {
 	}
 
 	/**
+	 * 是否是饥饿加载模式
 	 * Does this FactoryBean expect eager initialization, that is,
 	 * eagerly initialize itself as well as expect eager initialization
 	 * of its singleton object (if any)?

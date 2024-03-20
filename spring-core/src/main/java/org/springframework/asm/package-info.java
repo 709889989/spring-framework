@@ -1,4 +1,7 @@
 /**
+ * 避免jar包冲突，重打包asm包
+ * spring 使用asm获取类class信息，为避免潜在jar包冲突，重新repackage 了asm包
+ *
  * Spring's repackaging of
  * <a href="https://gitlab.ow2.org/asm/asm">ASM 9.x</a>
  * (with Spring-specific patches; for internal use only).

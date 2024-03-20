@@ -59,13 +59,16 @@ public abstract class ResourcePatternUtils {
 	 * @see PathMatchingResourcePatternResolver
 	 */
 	public static ResourcePatternResolver getResourcePatternResolver(@Nullable ResourceLoader resourceLoader) {
+		// 1. 如果resourceLoader 是位置模式的资源加载器，返回
 		if (resourceLoader instanceof ResourcePatternResolver resolver) {
 			return resolver;
 		}
 		else if (resourceLoader != null) {
+			// 使用resourceLoader 创建地址型匹配资源加载器
 			return new PathMatchingResourcePatternResolver(resourceLoader);
 		}
 		else {
+			// 使用默认资源加载器创建
 			return new PathMatchingResourcePatternResolver();
 		}
 	}

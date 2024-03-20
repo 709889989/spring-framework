@@ -27,6 +27,7 @@ import javax.annotation.meta.TypeQualifierNickname;
 import javax.annotation.meta.When;
 
 /**
+ * Spring 注解声明变量可能为空
  * A common Spring annotation to declare that annotated elements can be {@code null} under
  * some circumstance.
  *

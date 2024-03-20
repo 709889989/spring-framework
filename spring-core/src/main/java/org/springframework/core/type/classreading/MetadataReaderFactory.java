@@ -21,6 +21,8 @@ import java.io.IOException;
 import org.springframework.core.io.Resource;
 
 /**
+ * 类元数据读取器工厂接口
+ *
  * Factory interface for {@link MetadataReader} instances.
  * Allows for caching a MetadataReader per original resource.
  *
@@ -32,6 +34,8 @@ import org.springframework.core.io.Resource;
 public interface MetadataReaderFactory {
 
 	/**
+	 * className 样例： org.springframework.core.type.MetadataReader
+	 *
 	 * Obtain a MetadataReader for the given class name.
 	 * @param className the class name (to be resolved to a ".class" file)
 	 * @return a holder for the ClassReader instance (never {@code null})

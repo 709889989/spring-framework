@@ -17,6 +17,7 @@
 package org.springframework.util;
 
 /**
+ * 错误处理策略模式接口
  * A strategy for handling errors. This is especially useful for handling
  * errors that occur during asynchronous execution of tasks that have been
  * submitted to a TaskScheduler. In such cases, it may not be possible to
@@ -29,6 +30,8 @@ package org.springframework.util;
 public interface ErrorHandler {
 
 	/**
+	 * 处理异常信息
+	 * 方法可能会重新抛出异常信息
 	 * Handle the given error, possibly rethrowing it as a fatal exception.
 	 */
 	void handleError(Throwable t);

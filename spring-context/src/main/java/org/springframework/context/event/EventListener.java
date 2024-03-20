@@ -28,6 +28,8 @@ import org.springframework.context.ApplicationEvent;
 import org.springframework.core.annotation.AliasFor;
 
 /**
+ * Spring 事件 @EventListener 注解
+ * 标记方法为ApplicationListener实现
  * Annotation that marks a method as a listener for application events.
  *
  * <p>If an annotated method supports a single event type, the method may

@@ -20,6 +20,7 @@ import java.util.EventListener;
 import java.util.function.Consumer;
 
 /**
+ * Spring 事件listener接口，扩展自jdk的 EventListener
  * Interface to be implemented by application event listeners.
  *
  * <p>Based on the standard {@link java.util.EventListener} interface for the
@@ -43,6 +44,7 @@ import java.util.function.Consumer;
 public interface ApplicationListener<E extends ApplicationEvent> extends EventListener {
 
 	/**
+	 * 事件处理逻辑
 	 * Handle an application event.
 	 * @param event the event to respond to
 	 */
@@ -50,6 +52,7 @@ public interface ApplicationListener<E extends ApplicationEvent> extends EventLi
 
 
 	/**
+	 * 为指定consumer创建ApplicationListener
 	 * Create a new {@code ApplicationListener} for the given payload consumer.
 	 * @param consumer the event payload consumer
 	 * @param <T> the type of the event payload

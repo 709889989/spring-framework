@@ -21,7 +21,14 @@ import java.util.function.Supplier;
 import org.springframework.lang.Nullable;
 
 /**
+ * 分步记录度量应用启动信息
+ *
  * Step recording metrics about a particular phase or action happening during the {@link ApplicationStartup}.
+ *
+ * StartupStep 生命周期
+ *  <li>1. start() 创建并启动, 设置唯一id
+ *  <li>2. tag() 附属添加信息
+ *  <li>3. end() 结束
  *
  * <p>The lifecycle of a {@code StartupStep} goes as follows:
  * <ol>

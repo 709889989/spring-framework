@@ -29,6 +29,8 @@ import org.springframework.lang.Nullable;
 import org.springframework.util.Assert;
 
 /**
+ *
+ *
  * Standalone application context, accepting <em>component classes</em> as input &mdash;
  * in particular {@link Configuration @Configuration}-annotated classes, but also plain
  * {@link org.springframework.stereotype.Component @Component} types and JSR-330 compliant
@@ -65,9 +67,12 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * through {@link #register} calls and then manually {@linkplain #refresh refreshed}.
 	 */
 	public AnnotationConfigApplicationContext() {
+		// 分步启动信息 metrics 收集器，记录配置解析器创建相关信息
 		StartupStep createAnnotatedBeanDefReader = this.getApplicationStartup().start("spring.context.annotated-bean-reader.create");
+		// 1. 创建注解bean配置信息解析器reader
 		this.reader = new AnnotatedBeanDefinitionReader(this);
 		createAnnotatedBeanDefReader.end();
+		// 2. 创建bean 配置扫描器 scanner
 		this.scanner = new ClassPathBeanDefinitionScanner(this);
 	}
 
@@ -100,8 +105,15 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 * @param basePackages the packages to scan for component classes
 	 */
 	public AnnotationConfigApplicationContext(String... basePackages) {
+		// 1.创建 AnnotationConfigApplicationContext
+		// 		1.AbstractApplicationContext 初始化resourcePatternResolver = getResourcePatternResolver() 默认PathMatchingResourcePatternResolver，可扩展
+		// 		2.父类GenericApplicationContext 初始化beanFactory = new DefaultListableBeanFactory()
+		// 		3.初始化reader new AnnotatedBeanDefinitionReader(this)
+		// 		4.初始化scanner new ClassPathBeanDefinitionScanner(this)
 		this();
+		// 2.扫描指定包路径, 获取bean 配置BeanDefinition
 		scan(basePackages);
+		// 3.启动初始化Spring 容器
 		refresh();
 	}
 

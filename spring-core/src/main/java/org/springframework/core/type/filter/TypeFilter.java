@@ -22,6 +22,8 @@ import org.springframework.core.type.classreading.MetadataReader;
 import org.springframework.core.type.classreading.MetadataReaderFactory;
 
 /**
+ * 类型过滤器 filter
+ *
  * Base interface for type filters using a
  * {@link org.springframework.core.type.classreading.MetadataReader}.
  *
@@ -34,6 +36,8 @@ import org.springframework.core.type.classreading.MetadataReaderFactory;
 public interface TypeFilter {
 
 	/**
+	 * 判断给定class是否满足
+	 *
 	 * Determine whether this filter matches for the class described by
 	 * the given metadata.
 	 * @param metadataReader the metadata reader for the target class

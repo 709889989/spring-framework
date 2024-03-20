@@ -67,6 +67,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.util.StringValueResolver;
 
 /**
+ * Jakarta 注解支持 BeanPostProcessor
+ *
  * {@link org.springframework.beans.factory.config.BeanPostProcessor} implementation
  * that supports common Java annotations out of the box, in particular the common
  * annotations in the {@code jakarta.annotation} package. These common Java
